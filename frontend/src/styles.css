@@ -17,3 +17,5 @@
 
 .inline-symbol{width:1em;height:1em;vertical-align:-.12em;display:inline-block;flex-shrink:0}.rating-stars{display:inline-flex;gap:3px;align-items:center}.brand i svg{width:18px;height:18px}.giant-arrow>svg{width:1em;height:1em}.banner-art>svg{width:1em;height:1em}.banner-art i svg{width:1em;height:1em}.ticker>svg{width:20px;height:20px;flex-shrink:0}.sidebar-note svg{width:26px;height:26px}.field input,.field select,.field textarea{min-width:0}.panel,.offer-card,.auth-card{min-width:0}
 @media(max-width:650px){.field input,.field select,.field textarea{font-size:16px}.btn,.icon-btn,.menu-toggle,.language{min-height:44px}.modal{max-height:90dvh;width:calc(100% - 24px)}.form-footer{flex-wrap:wrap}.profile-card p,.offer-card p,.result-text{overflow-wrap:anywhere}}
+@media(max-width:900px){.app-shell{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:650px){.wallet-hero>div{min-width:0}.wallet-hero .actions{flex-wrap:wrap}.verification-banner>span{min-width:0;overflow-wrap:anywhere}}
