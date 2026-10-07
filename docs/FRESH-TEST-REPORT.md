@@ -17,5 +17,7 @@ Correct target: https://nawell.up.railway.app/ (the previous nawall domain retur
 ## Defects found and corrected
 The 320px Arabic account layout exposed intrinsic grid sizing overflow. The mobile grid now uses `minmax(0, 1fr)` and wallet controls can wrap. A second overflow source was the account header: compact branding and spacing now keep its controls within small phone widths. Both fixes are published to GitHub.
 
+Final deployment verified: the live site serves `index-DaZbYc2j.css`. After signing in again, the Arabic wallet at 320px reports document scroll width 305px (remaining width is the scrollbar), with the menu at x=10px and working. The backend deployment cleared its in-memory session; Retry redirected to login and signing in recovered successfully.
+
 ## Boundaries
 No emails or external provider calls were made. The catalog is empty and the fresh account is unverified, so assessments, offer creation, negotiations, completed exchanges, reviews, live AI responses, WhatsApp, and Zoom have not passed full live workflow testing. No existing user records were edited. The clearly labeled QA account remains for administrator cleanup.
