@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useRef, useState } from 'r
 import { api,uploadFormImages } from './api';
 import ImageField from './ImageField';
 import { riyadhDate } from './rules';
-import { ArrowUpRight, Check, LoaderCircle, X, AlertCircle } from 'lucide-react';
+import { ArrowUpRight, Check, LoaderCircle, X, AlertCircle ,Coins,Asterisk,Star,ArrowRight,ArrowLeftRight} from 'lucide-react';
 export const AppContext = createContext(null);
 export const useApp = () => useContext(AppContext);
 export function useResource(loader, deps = []) {
@@ -17,7 +17,7 @@ export function useResource(loader, deps = []) {
 export function Button({ children, busy, variant = 'primary', ...props }) { return <button className={`btn ${variant}`} disabled={busy || props.disabled} {...props}>{busy ? <LoaderCircle size={17} className="spin"/> : null}{children}</button>; }
 export function Header({ eyebrow, title, subtitle, children }) { return <div className="page-heading"><div><div className="eyebrow">{eyebrow}</div><h1>{title}</h1>{subtitle && <p>{subtitle}</p>}</div><div className="actions">{children}</div></div>; }
 export function Badge({ children }) { const {t} = useApp(); return <span className={`badge ${String(children).toLowerCase()}`}>{t(children)}</span>; }
-export function Empty({ title, text, children }) { const {t} = useApp(); return <div className="empty"><span className="empty-icon">↔</span><h3>{title || t('Nothing here yet')}</h3><p>{text || t('Your next exchange starts with a little curiosity.')}</p>{children}</div>; }
+export function Empty({ title, text, children }) { const {t} = useApp(); return <div className="empty"><span className="empty-icon"><ArrowLeftRight aria-hidden="true"/></span><h3>{title || t('Nothing here yet')}</h3><p>{text || t('Your next exchange starts with a little curiosity.')}</p>{children}</div>; }
 export function Resource({ state, children, empty }) { const {t} = useApp(); if(state.loading) return <div className="loading" role="status"><LoaderCircle className="spin"/>{t('Loading…')}</div>; if(state.error) return <div className="error-panel" role="alert"><AlertCircle/><div><h3>{t('Could not load this page')}</h3><p>{state.error.message}</p><Button variant="secondary" onClick={state.reload}>{t('Try again')}</Button></div></div>; if(Array.isArray(state.data) && !state.data.length) return empty || <Empty/>; return children(state.data); }
 export function Field({ field, value, onChange }) {
  const {t} = useApp(); const id = React.useId(); if(field.type==='image') return <ImageField field={field} value={value} onChange={onChange} id={id}/>; const props = { id, name:field.name, value:value ?? '', onChange:e => onChange(field.type === 'number' ? (e.target.value === '' ? '' : Number(e.target.value)) : e.target.value), required:field.required, min:field.min, max:field.max, maxLength:field.maxLength, minLength:field.minLength, pattern:field.pattern, placeholder:field.placeholder, disabled:field.disabled };
@@ -50,3 +50,5 @@ export const modes = ['ONLINE','IN_PERSON','BOTH'];
 export const profileFields = company => [f('name',{required:true,maxLength:company?150:100}),f('phone',{required:true,pattern:'05[0-9]{8}',maxLength:10,hint:'10 digits, starting with 05'}),f('city',{maxLength:100}),f(company?'logo':'profileImage',{type:'image'}),f(company?'description':'bio',{type:'textarea',maxLength:500,wide:true})];
 export const offerFields = [f('description',{type:'textarea',maxLength:500,wide:true}),f('mode',{required:true,options:modes}),f('tokenCost',{required:true,type:'number',min:1}),f('capacity',{required:true,type:'number',min:1})];
 export const sessionFields = [f('title',{required:true,maxLength:150,wide:true}),f('scheduledAt',{type:'datetime-local',required:true,hint:'Dates use Asia/Riyadh time'}),f('durationMinutes',{type:'number',required:true,min:1}),f('mode',{required:true,options:['ONLINE','IN_PERSON']}),f('location'),f('meetingLink',{type:'url',maxLength:2000})];
+
+export function RatingStars({rating}) {return <span className="rating-stars" role="img" aria-label={`${rating} / 5`}>{Array.from({length:5},(_,index)=><Star key={index} size={17} aria-hidden="true" fill={index<rating?'currentColor':'none'}/>)}</span>;}

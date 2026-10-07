@@ -14,3 +14,6 @@
 @media(max-width:650px){.tabs{overflow-x:auto}.tabs button{flex-shrink:0;padding:12px 14px}}
 
 .image-field label{display:grid;gap:8px}.image-field input[type=file]{width:100%;max-width:100%;padding:12px;border:1px solid var(--line)}.image-preview{display:flex;align-items:center;gap:12px;margin-top:8px}.image-preview img{width:84px;height:84px;object-fit:cover;border-radius:12px}.image-field small{display:block;margin-top:6px}
+
+.inline-symbol{width:1em;height:1em;vertical-align:-.12em;display:inline-block;flex-shrink:0}.rating-stars{display:inline-flex;gap:3px;align-items:center}.brand i svg{width:18px;height:18px}.giant-arrow>svg{width:1em;height:1em}.banner-art>svg{width:1em;height:1em}.banner-art i svg{width:1em;height:1em}.ticker>svg{width:20px;height:20px;flex-shrink:0}.sidebar-note svg{width:26px;height:26px}.field input,.field select,.field textarea{min-width:0}.panel,.offer-card,.auth-card{min-width:0}
+@media(max-width:650px){.field input,.field select,.field textarea{font-size:16px}.btn,.icon-btn,.menu-toggle,.language{min-height:44px}.modal{max-height:90dvh;width:calc(100% - 24px)}.form-footer{flex-wrap:wrap}.profile-card p,.offer-card p,.result-text{overflow-wrap:anywhere}}
