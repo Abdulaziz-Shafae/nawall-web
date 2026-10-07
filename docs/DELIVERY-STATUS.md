@@ -1,8 +1,8 @@
 # Delivery status
 
-The complete source is committed locally. The private GitHub repository `Abdulaziz-Shafae/nawall-web` was created successfully, but source publication is pending: three git pushes returned GitHub Internal Server Error; a contents API initialization returned HTTP 500; the GitHub web editor returned “File could not be edited.” The repository was confirmed empty after these attempts. No remote commit was claimed as successful.
+The complete source is committed locally and published on the `main` branch of the private GitHub repository [Abdulaziz-Shafae/nawall-web](https://github.com/Abdulaziz-Shafae/nawall-web). Earlier publication attempts returned server errors; the subsequent push including the advisory offer-evaluation feature succeeded.
 
-Once GitHub writes are working, run `git push -u origin main` from this local repository. The remote URL is already configured. A clean source ZIP is supplied alongside the project; it excludes actual environment files, build output and dependencies.
+The user's local GitHub checkout is `C:\Users\nadas\OneDrive\Documents\GitHub\nawall-web`. A clean source ZIP is supplied alongside the authoring project; it excludes actual environment files, build output and dependencies.
 
 Validation completed: frontend production build, 14 frontend tests, 133 frontend/admin method-and-path checks against 124 backend endpoints, backend package, 14 isolated backend tests, and npm audit with zero vulnerabilities. English/Arabic layouts, mobile/desktop rendering, account forms, and unavailable-server feedback were inspected in the browser.
 
