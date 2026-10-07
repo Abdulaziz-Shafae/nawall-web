@@ -110,12 +110,18 @@ npm audit
 
 ```powershell
 cd backend
-.\mvnw.cmd "-Dtest=ExchangeCompletionTests,WebIntegrationTests" test
+.\mvnw.cmd "-Dtest=OfferEvaluationTests,ExchangeCompletionTests,WebIntegrationTests" test
 .\mvnw.cmd -DskipTests package
 ```
 
-Recorded results: production frontend build passed; 13 frontend tests passed; 132 method/path checks matched all 123 source endpoints; 10 targeted backend tests passed; dependency audit reported zero vulnerabilities after a compatible source-map-js patch. The normal uploaded `contextLoads` test requires a configured database and OpenAI environment and was not included in the isolated test run. Desktop/mobile English and Arabic rendering and unavailable-server feedback were inspected in the real browser.
+Recorded results: production frontend build passed; 14 frontend tests passed; 133 method/path checks matched all 124 source endpoints; 14 targeted backend tests passed; dependency audit reported zero vulnerabilities after a compatible source-map-js patch. The normal uploaded `contextLoads` test requires a configured database and OpenAI environment and was not included in the isolated test run. Desktop/mobile English and Arabic rendering and unavailable-server feedback were inspected in the real browser.
 
 **Live database/external-provider end-to-end verification remains pending.** No MySQL service was reachable in the authoring environment and no new external credentials were supplied. The frontend is wired to the original services; successful email/WhatsApp/Zoom/AI delivery has not been claimed without those services running. No mock data is substituted for this limitation.
 
 Framework setup follows the [Vite guide](https://vite.dev/guide/) and [React Router declarative routing](https://reactrouter.com/start/declarative/routing).
+
+## AI offer-price evaluation
+
+Before creating an offer, providers can select **Evaluate price**. It sends the entered description, mode, tokenCost, and capacity to `POST /api/v1/skill-offer/create/{skillId}/evaluate`. Include duration and topics in the description. The server requires an active account and a verified owned skill, and compares up to 20 active mode-compatible offers. It returns FAIR, OVERPRICED, UNDERPRICED, or INSUFFICIENT_INFORMATION with a nullable suggested price, explanation and suggestions. This does not save or modify the offer. The separate **Create offer** action saves the provider’s entered price. Editing any field clears the previous evaluation.
+
+The DTOs and service/controller addition follow the supplied update. Four isolated tests cover no-save behavior, insufficient evidence, inconsistent prices, and verification requirements. Actual provider output still requires configured MySQL and OpenAI credentials.

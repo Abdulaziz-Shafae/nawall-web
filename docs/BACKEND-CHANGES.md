@@ -14,3 +14,5 @@ Compared with the latest `Capstone_3.zip`, packages and domain relationships are
 10. **Deployment:** Added Dockerfiles, nginx same-origin proxy, Compose MySQL service, and a Windows environment-loading startup helper. No deployment was executed against an external host.
 
 No hardcoded administrator or live test account is included. Browser validation uses real frontend HTTP calls and shows errors when infrastructure is absent.
+
+11. **Supplied offer-evaluation addition:** Added `OfferEvaluationDtoIn` and `OfferEvaluationDtoOut` with the supplied fields/validation, the supplied `AIService.evaluateOffer` implementation, and `POST /api/v1/skill-offer/create/{skillId}/evaluate`. It uses existing active-account/verified-skill checks and AI helpers. It returns advice only; no offer save, price change, relationship change or token transaction occurs.

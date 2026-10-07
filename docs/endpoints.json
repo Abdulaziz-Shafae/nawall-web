@@ -777,6 +777,13 @@
     "arguments": ""
   },
   {
+    "method": "POST",
+    "path": "/api/v1/skill-offer/create/{skillId}/evaluate",
+    "handler": "evaluateOffer",
+    "controller": "SkillOfferController.java",
+    "arguments": "HttpSession session, @PathVariable Integer skillId, @RequestBody @Valid OfferEvaluationDtoIn dto"
+  },
+  {
     "method": "GET",
     "path": "/api/v1/token-transaction/get",
     "handler": "get",

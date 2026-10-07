@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {ArrowUpRight, Search, Plus, ShieldCheck, Users, Monitor, MapPin, ArrowLeftRight} from 'lucide-react';
 import {api} from './api';
+import OfferComposer from './OfferComposer';
 import {can} from './rules';
 import {useApp,useResource,Resource,Header,Button,Badge,Empty,Action,Result,Field,f,modes,offerFields,DateText} from './ui';
 
@@ -24,7 +25,7 @@ export function Skills() {
 }
 export function Offers() {
  const {user,t,dialog}=useApp();const state=useResource(signal=>api('providerOffers',{providerId:user.accountId},{signal}));const skills=useResource(signal=>Promise.all([api('verifiedSkills',{accountId:user.accountId},{signal}),api('skills',{}, {signal})]));
- const create=()=>{const [verified,catalog]=skills.data || [[],[]];const options=catalog.filter(s=>verified.some(v=>v.skillName===s.name)).map(s=>({value:s.id,label:s.name}));dialog({title:t('Create offer'),text:t('Verified skills can become teaching offers.'),fields:[f('skillId',{label:'Skills',options,required:true}),...offerFields],initial:{mode:'ONLINE',tokenCost:1,capacity:1},submit:({skillId,...body})=>api('createOffer',{skillId},{body}),after:state.reload});};
+ const create=()=>{const [verified,catalog]=skills.data || [[],[]];const options=catalog.filter(s=>verified.some(v=>v.skillName===s.name)).map(s=>({value:s.id,label:s.name}));dialog({title:t('Create offer'),content:<OfferComposer options={options} after={state.reload}/>});};
  return <div className="page"><Header eyebrow={t('My offers')} title={t('What will you teach?','ماذا ستعلّم؟')} subtitle={t('Earn by sharing. Spend on your next skill.')}><Button disabled={skills.loading || !skills.data?.[0]?.length} onClick={create}><Plus size={17}/>{t('Create offer')}</Button></Header>{skills.error && <p className="form-error">{skills.error.message}</p>}{!skills.loading && !skills.error && !skills.data?.[0]?.length && <p className="info-banner">{t('Pass an assessment with at least 70 to verify a skill.')} <Link to="/skills">{t('My skills')} ↗</Link></p>}<Resource state={state}>{offers=><div className="offer-grid">{offers.map(o=><OfferCard key={o.id} offer={o} mine reload={state.reload}/>)}</div>}</Resource></div>;
 }
 export function Provider() {

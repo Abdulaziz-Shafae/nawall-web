@@ -115,6 +115,7 @@ Generated from controller source before frontend implementation. See Java DTOs a
 | GET | `/api/v1/skill-offer/skill/{skillId}` | SkillOfferController.java · getOffersBySkill |
 | GET | `/api/v1/skill-offer/provider/{providerId}` | SkillOfferController.java · getOffersCreatedByProvider |
 | GET | `/api/v1/skill-offer/available` | SkillOfferController.java · getActiveOffers |
+| POST | `/api/v1/skill-offer/create/{skillId}/evaluate` | SkillOfferController.java · evaluateOffer |
 | GET | `/api/v1/token-transaction/get` | TokenTransactionController.java · get |
 | GET | `/api/v1/token-transaction/get/account/{accountId}` | TokenTransactionController.java · getByAccountId |
 | GET | `/api/v1/token-transaction/get/exchange/{exchangeId}` | TokenTransactionController.java · getByExchangeId |
