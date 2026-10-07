@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {can,negotiationDate,sessionDate,safeUrl} from '../src/rules.js';
+const learner={accountId:1,emailVerified:true,tokenBalance:10},teacher={accountId:2,emailVerified:true,tokenBalance:3};
+const future='2099-01-01 12:00';const req={requesterAccountId:1,providerAccountId:2,status:'OPEN',negotiationHistory:[]};
+test('only teacher can propose the initial date',()=>{assert.equal(can.proposeDate(learner,req),false);assert.equal(can.proposeDate(teacher,req),true);assert.equal(can.proposeDate(learner,{...req,negotiationHistory:[{senderAccountId:2,proposedDate:future}]}),true);});
+test('own proposal and past dates cannot be accepted',()=>{assert.equal(can.acceptProposal(learner,req,{senderAccountId:1,proposedDate:future}),false);assert.equal(can.acceptProposal(learner,req,{senderAccountId:2,proposedDate:'2020-01-01 12:00'}),false);assert.equal(can.acceptProposal(learner,req,{senderAccountId:2,proposedDate:future}),true);});
+test('ownership controls exchange acceptance and completion',()=>{const ex={providerAccountId:2,requesterAccountId:1,status:'PENDING',agreedDate:future};assert.equal(can.acceptExchange(learner,ex),false);assert.equal(can.acceptExchange(teacher,ex),true);assert.equal(can.completeExchange(teacher,{...ex,status:'ACCEPTED'}),false);assert.equal(can.completeExchange(learner,{...ex,status:'ACCEPTED'}),true);assert.equal(can.completeExchange(learner,{...ex,status:'COMPLETED'}),false);});
+test('learning requires verified email, ownership separation, and sufficient tokens',()=>{const offer={providerAccountId:2,status:'ACTIVE',tokenCost:4};assert.equal(can.requestOffer(learner,offer),true);assert.equal(can.requestOffer({...learner,emailVerified:false},offer),false);assert.equal(can.requestOffer(teacher,offer),false);assert.equal(can.requestOffer({...learner,tokenBalance:3},offer),false);});
+test('redemption preserves minimum amount and remaining balance',()=>{assert.equal(can.redeem(8,5),true);assert.equal(can.redeem(7,5),false);assert.equal(can.redeem(10,4),false);assert.equal(can.redeem(10,5.5),false);});
+test('Java date formats differ between negotiation and session DTOs',()=>{assert.equal(negotiationDate('2026-12-03T13:30'),'2026-12-03 13:30');assert.equal(sessionDate('2026-12-03 13:30'),'2026-12-03T13:30');});
+test('external links reject script and data URLs',()=>{assert.equal(safeUrl('javascript:alert(1)'),null);assert.equal(safeUrl('data:text/html,test'),null);assert.equal(safeUrl('https://zoom.us/j/123'),'https://zoom.us/j/123');});

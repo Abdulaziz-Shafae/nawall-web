@@ -1,0 +1,863 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/v1/account/get",
+    "handler": "get",
+    "controller": "AccountController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/account/add",
+    "handler": "add",
+    "controller": "AccountController.java",
+    "arguments": "@RequestBody @Valid AccountDtoIn accountDtoIn"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/account/update/{id}",
+    "handler": "update",
+    "controller": "AccountController.java",
+    "arguments": "@PathVariable Integer id, @RequestBody @Valid AccountDtoIn accountDtoIn"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/account/delete/{id}",
+    "handler": "delete",
+    "controller": "AccountController.java",
+    "arguments": "@PathVariable Integer id"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/account/login",
+    "handler": "login",
+    "controller": "AccountController.java",
+    "arguments": "@RequestBody @Valid LoginDtoIn loginDtoIn, HttpSession session, HttpServletRequest request"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/account/logout",
+    "handler": "logout",
+    "controller": "AccountController.java",
+    "arguments": "HttpSession session"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/account/register/individual",
+    "handler": "registerIndividual",
+    "controller": "AccountController.java",
+    "arguments": "@RequestBody @Valid RegisterIndividualDtoIn registerIndividualDtoIn"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/account/register/company",
+    "handler": "registerCompany",
+    "controller": "AccountController.java",
+    "arguments": "@RequestBody @Valid RegisterCompanyDtoIn registerCompanyDtoIn"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/account/send-verification-email",
+    "handler": "sendVerificationEmail",
+    "controller": "AccountController.java",
+    "arguments": "HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/account/verify-email",
+    "handler": "verifyEmail",
+    "controller": "AccountController.java",
+    "arguments": "@RequestParam Integer accountId, @RequestParam String token"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/account/profile",
+    "handler": "getFullProfile",
+    "controller": "AccountController.java",
+    "arguments": "HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/account/dashboard",
+    "handler": "getDashboard",
+    "controller": "AccountController.java",
+    "arguments": "HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/account-skill/get",
+    "handler": "getAccountSkills",
+    "controller": "AccountSkillController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/account-skill/add/{skillId}",
+    "handler": "addAccountSkill",
+    "controller": "AccountSkillController.java",
+    "arguments": "HttpSession session, @PathVariable Integer skillId"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/account-skill/update/{id}",
+    "handler": "updateAccountSkill",
+    "controller": "AccountSkillController.java",
+    "arguments": "@PathVariable Integer id, @RequestBody @Valid AccountSkill accountSkill"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/account-skill/delete/{id}",
+    "handler": "deleteAccountSkill",
+    "controller": "AccountSkillController.java",
+    "arguments": "@PathVariable Integer id"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/account-skill/account/{accountId}",
+    "handler": "getSkillsByAccount",
+    "controller": "AccountSkillController.java",
+    "arguments": "@PathVariable Integer accountId"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/account-skill/verified/{accountId}",
+    "handler": "getVerifiedSkillsOfAccount",
+    "controller": "AccountSkillController.java",
+    "arguments": "@PathVariable Integer accountId"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/agreement/get",
+    "handler": "get",
+    "controller": "AgreementController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/agreement/add",
+    "handler": "add",
+    "controller": "AgreementController.java",
+    "arguments": "@RequestBody @Valid AgreementDtoIn agreementDtoIn, HttpSession session"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/agreement/update/{id}",
+    "handler": "update",
+    "controller": "AgreementController.java",
+    "arguments": "@PathVariable Integer id, @RequestBody @Valid AgreementDtoIn agreementDtoIn, HttpSession session"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/agreement/delete/{id}",
+    "handler": "delete",
+    "controller": "AgreementController.java",
+    "arguments": "@PathVariable Integer id"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/agreement/{exchangeId}/provider-accept",
+    "handler": "providerAccept",
+    "controller": "AgreementController.java",
+    "arguments": "@PathVariable Integer exchangeId, HttpSession session"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/agreement/{exchangeId}/receiver-accept",
+    "handler": "receiverAccept",
+    "controller": "AgreementController.java",
+    "arguments": "@PathVariable Integer exchangeId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/agreement/{exchangeId}/status",
+    "handler": "getAcceptanceStatus",
+    "controller": "AgreementController.java",
+    "arguments": "@PathVariable Integer exchangeId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/ai/match/{skillId}",
+    "handler": "match",
+    "controller": "AIController.java",
+    "arguments": "@PathVariable Integer skillId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/ai/match/{providerId}/{skillId}/explanation",
+    "handler": "matchExplanation",
+    "controller": "AIController.java",
+    "arguments": "@PathVariable Integer providerId, @PathVariable Integer skillId, HttpSession session"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/ai/cv/extract-skills",
+    "handler": "extractSkills",
+    "controller": "AIController.java",
+    "arguments": "@RequestParam(\"file\") MultipartFile file, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/ai/cv/suggest-offers",
+    "handler": "suggestOffers",
+    "controller": "AIController.java",
+    "arguments": "HttpSession session"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/ai/exchange/fairness/{requestId}/{offerId}",
+    "handler": "exchangeFairness",
+    "controller": "AIController.java",
+    "arguments": "@PathVariable Integer requestId, @PathVariable Integer offerId, HttpSession session"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/ai/agreement/generate/{exchangeId}",
+    "handler": "generateAgreement",
+    "controller": "AIController.java",
+    "arguments": "@PathVariable Integer exchangeId, HttpSession session"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/ai/linkedin/get-skills",
+    "handler": "getLinkedInSkills",
+    "controller": "AIController.java",
+    "arguments": "@RequestBody @Valid LinkedInProfileDtoIn linkedInProfileDtoIn, HttpSession session"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/ai/linkedin/add-skills",
+    "handler": "addLinkedInSkills",
+    "controller": "AIController.java",
+    "arguments": "@RequestBody @Valid LinkedInAddSkillsDtoIn linkedInAddSkillsDtoIn, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/ai/skill/relationships/{skillId}",
+    "handler": "skillRelationships",
+    "controller": "AIController.java",
+    "arguments": "@PathVariable Integer skillId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/ai/skill/{skillId}/related-providers",
+    "handler": "relatedProviders",
+    "controller": "AIController.java",
+    "arguments": "@PathVariable Integer skillId, HttpSession session"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/ai/assessment/generate/{accountSkillId}",
+    "handler": "generateAssessment",
+    "controller": "AIController.java",
+    "arguments": "@PathVariable Integer accountSkillId, HttpSession session"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/ai/assessment/evaluate/{accountSkillId}",
+    "handler": "evaluateAssessment",
+    "controller": "AIController.java",
+    "arguments": "@PathVariable Integer accountSkillId, @RequestBody @Valid AIAssessmentDtoIn input, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/company-profile/get",
+    "handler": "get",
+    "controller": "CompanyProfileController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/company-profile/add",
+    "handler": "add",
+    "controller": "CompanyProfileController.java",
+    "arguments": "@RequestBody @Valid CompanyProfileDtoIn companyProfileDtoIn"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/company-profile/update/{id}",
+    "handler": "update",
+    "controller": "CompanyProfileController.java",
+    "arguments": "@PathVariable Integer id, @RequestBody @Valid CompanyProfileDtoIn companyProfileDtoIn"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/company-profile/delete/{id}",
+    "handler": "delete",
+    "controller": "CompanyProfileController.java",
+    "arguments": "@PathVariable Integer id"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/exchange/get",
+    "handler": "get",
+    "controller": "ExchangeController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/exchange/add",
+    "handler": "add",
+    "controller": "ExchangeController.java",
+    "arguments": "@RequestBody @Valid ExchangeDtoIn exchangeDtoIn"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/exchange/update/{id}",
+    "handler": "update",
+    "controller": "ExchangeController.java",
+    "arguments": "@PathVariable Integer id, @RequestBody @Valid ExchangeDtoIn exchangeDtoIn"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/exchange/delete/{id}",
+    "handler": "delete",
+    "controller": "ExchangeController.java",
+    "arguments": "@PathVariable Integer id"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/exchange/create/{requestId}/{offerId}",
+    "handler": "createExchange",
+    "controller": "ExchangeController.java",
+    "arguments": "@PathVariable Integer requestId, @PathVariable Integer offerId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/exchange/{exchangeId}",
+    "handler": "getExchangeDetails",
+    "controller": "ExchangeController.java",
+    "arguments": "@PathVariable Integer exchangeId, HttpSession session"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/exchange/{exchangeId}/accept",
+    "handler": "acceptExchange",
+    "controller": "ExchangeController.java",
+    "arguments": "@PathVariable Integer exchangeId, HttpSession session"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/exchange/{exchangeId}/cancel",
+    "handler": "cancelExchange",
+    "controller": "ExchangeController.java",
+    "arguments": "@PathVariable Integer exchangeId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/exchange/account",
+    "handler": "getAccountExchanges",
+    "controller": "ExchangeController.java",
+    "arguments": "HttpSession session"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/exchange/{exchangeId}/complete",
+    "handler": "completeExchange",
+    "controller": "ExchangeController.java",
+    "arguments": "@PathVariable Integer exchangeId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/individual-profile/get",
+    "handler": "get",
+    "controller": "IndividualProfileController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/individual-profile/add",
+    "handler": "add",
+    "controller": "IndividualProfileController.java",
+    "arguments": "@RequestBody @Valid IndividualProfileDtoIn individualProfileDtoIn"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/individual-profile/update/{id}",
+    "handler": "update",
+    "controller": "IndividualProfileController.java",
+    "arguments": "@PathVariable Integer id, @RequestBody @Valid IndividualProfileDtoIn individualProfileDtoIn"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/individual-profile/delete/{id}",
+    "handler": "delete",
+    "controller": "IndividualProfileController.java",
+    "arguments": "@PathVariable Integer id"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/learning-request/get",
+    "handler": "getAllLearningRequests",
+    "controller": "LearningRequestController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/learning-request/create/{offerId}",
+    "handler": "addLearningRequest",
+    "controller": "LearningRequestController.java",
+    "arguments": "@PathVariable Integer offerId, @RequestBody @Valid CreateLearningRequestDtoIn dtoIn, HttpSession session"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/learning-request/update/{id}",
+    "handler": "updateLearningRequest",
+    "controller": "LearningRequestController.java",
+    "arguments": "@PathVariable Integer id, @RequestBody @Valid LearningRequest learningRequest"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/learning-request/delete/{id}",
+    "handler": "deleteLearningRequest",
+    "controller": "LearningRequestController.java",
+    "arguments": "@PathVariable Integer id"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/learning-request/{requestId}",
+    "handler": "getLearningRequestById",
+    "controller": "LearningRequestController.java",
+    "arguments": "@PathVariable Integer requestId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/learning-request/open",
+    "handler": "getOpenLearningRequests",
+    "controller": "LearningRequestController.java",
+    "arguments": ""
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/learning-request/skill/{skillId}",
+    "handler": "getLearningRequestsBySkill",
+    "controller": "LearningRequestController.java",
+    "arguments": "@PathVariable Integer skillId"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/learning-request/requester/{accountId}",
+    "handler": "getRequestsByRequester",
+    "controller": "LearningRequestController.java",
+    "arguments": "@PathVariable Integer accountId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/learning-request/provider/{accountId}",
+    "handler": "getRequestsByProvider",
+    "controller": "LearningRequestController.java",
+    "arguments": "@PathVariable Integer accountId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/learning-request/urgent",
+    "handler": "getUrgentLearningRequests",
+    "controller": "LearningRequestController.java",
+    "arguments": ""
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/learning-request/{requestId}/cancel",
+    "handler": "cancelLearningRequest",
+    "controller": "LearningRequestController.java",
+    "arguments": "@PathVariable Integer requestId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/request-negotiation/get",
+    "handler": "get",
+    "controller": "RequestNegotiationController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/request-negotiation/respond/{requestId}",
+    "handler": "respond",
+    "controller": "RequestNegotiationController.java",
+    "arguments": "@PathVariable Integer requestId, @RequestBody @Valid RequestNegotiationDtoIn dtoIn, HttpSession session"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/request-negotiation/update/{id}",
+    "handler": "update",
+    "controller": "RequestNegotiationController.java",
+    "arguments": "@PathVariable Integer id, @RequestBody @Valid RequestNegotiationDtoIn requestNegotiationDtoIn"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/request-negotiation/delete/{id}",
+    "handler": "delete",
+    "controller": "RequestNegotiationController.java",
+    "arguments": "@PathVariable Integer id"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/request-negotiation/request/{requestId}",
+    "handler": "getNegotiationHistory",
+    "controller": "RequestNegotiationController.java",
+    "arguments": "@PathVariable Integer requestId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/request-negotiation/latest/{requestId}",
+    "handler": "getLatestNegotiation",
+    "controller": "RequestNegotiationController.java",
+    "arguments": "@PathVariable Integer requestId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/request-negotiation/{requestId}/calculate-urgency/{negotiationId}",
+    "handler": "getNegotiationProposal",
+    "controller": "RequestNegotiationController.java",
+    "arguments": "@PathVariable Integer requestId, @PathVariable Integer negotiationId, HttpSession session"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/request-negotiation/{negotiationId}/accept",
+    "handler": "acceptProposal",
+    "controller": "RequestNegotiationController.java",
+    "arguments": "@PathVariable Integer negotiationId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/review/get",
+    "handler": "get",
+    "controller": "ReviewController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/review/add/{exchangeId}",
+    "handler": "add",
+    "controller": "ReviewController.java",
+    "arguments": "@PathVariable Integer exchangeId, @RequestBody @Valid CreateReviewDtoIn dto, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/review/account/{accountId}",
+    "handler": "getByAccountId",
+    "controller": "ReviewController.java",
+    "arguments": "@PathVariable Integer accountId"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/review/account/{accountId}/average",
+    "handler": "getAverageRating",
+    "controller": "ReviewController.java",
+    "arguments": "@PathVariable Integer accountId"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/review/update/{id}",
+    "handler": "update",
+    "controller": "ReviewController.java",
+    "arguments": "@PathVariable Integer id, @RequestBody @Valid ReviewDtoIn dto"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/review/delete/{id}",
+    "handler": "delete",
+    "controller": "ReviewController.java",
+    "arguments": "@PathVariable Integer id"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/search/providers/{skillId}",
+    "handler": "findProvidersBySkill",
+    "controller": "SearchController.java",
+    "arguments": "@PathVariable Integer skillId"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/search/requests/{skillId}",
+    "handler": "findRequestsBySkill",
+    "controller": "SearchController.java",
+    "arguments": "@PathVariable Integer skillId"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/session/get",
+    "handler": "get",
+    "controller": "SessionController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/session/add",
+    "handler": "add",
+    "controller": "SessionController.java",
+    "arguments": "@RequestBody @Valid SessionDtoIn sessionDtoIn"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/session/update/{id}",
+    "handler": "update",
+    "controller": "SessionController.java",
+    "arguments": "@PathVariable Integer id, @RequestBody @Valid SessionDtoIn sessionDtoIn"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/session/delete/{id}",
+    "handler": "delete",
+    "controller": "SessionController.java",
+    "arguments": "@PathVariable Integer id"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/session/create/{offerId}",
+    "handler": "createSession",
+    "controller": "SessionController.java",
+    "arguments": "@PathVariable Integer offerId, @RequestBody @Valid SessionDtoIn sessionDtoIn, HttpSession session"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/session/{sessionId}/join/{exchangeId}",
+    "handler": "joinSession",
+    "controller": "SessionController.java",
+    "arguments": "@PathVariable Integer sessionId, @PathVariable Integer exchangeId, HttpSession session"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/session/{sessionId}/attendance/{exchangeId}",
+    "handler": "updateAttendance",
+    "controller": "SessionController.java",
+    "arguments": "@PathVariable Integer sessionId, @PathVariable Integer exchangeId, @RequestBody Map<String, String> body, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/session/offer/{offerId}",
+    "handler": "getSessionsByOffer",
+    "controller": "SessionController.java",
+    "arguments": "@PathVariable Integer offerId"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/session/exchange/{exchangeId}",
+    "handler": "getSessionsByExchange",
+    "controller": "SessionController.java",
+    "arguments": "@PathVariable Integer exchangeId, HttpSession session"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/session/{sessionId}/zoom",
+    "handler": "createZoomMeeting",
+    "controller": "SessionController.java",
+    "arguments": "@PathVariable Integer sessionId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/session-participant/get",
+    "handler": "get",
+    "controller": "SessionParticipantController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/session-participant/add",
+    "handler": "add",
+    "controller": "SessionParticipantController.java",
+    "arguments": "@RequestBody @Valid SessionParticipantDtoIn dto"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/session-participant/update/{id}",
+    "handler": "update",
+    "controller": "SessionParticipantController.java",
+    "arguments": "@PathVariable Integer id, @RequestBody @Valid SessionParticipantDtoIn dto"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/session-participant/delete/{id}",
+    "handler": "delete",
+    "controller": "SessionParticipantController.java",
+    "arguments": "@PathVariable Integer id"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/skill-assessment/get",
+    "handler": "getAllSkillAssessments",
+    "controller": "SkillAssessmentController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/skill-assessment/take/{accountSkillId}",
+    "handler": "takeSkillAssessment",
+    "controller": "SkillAssessmentController.java",
+    "arguments": "HttpSession session, @PathVariable Integer accountSkillId,\n                                                 @RequestBody @Valid SkillAssessment skillAssessment"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/skill-assessment/history/{accountSkillId}",
+    "handler": "getAssessmentHistory",
+    "controller": "SkillAssessmentController.java",
+    "arguments": "@PathVariable Integer accountSkillId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/skill-assessment/latest/{accountSkillId}",
+    "handler": "getLatestAssessment",
+    "controller": "SkillAssessmentController.java",
+    "arguments": "@PathVariable Integer accountSkillId, HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/skill/get",
+    "handler": "getAllSkills",
+    "controller": "SkillController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/skill/add",
+    "handler": "addSkill",
+    "controller": "SkillController.java",
+    "arguments": "@RequestBody @Valid Skill skill"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/skill/update/{id}",
+    "handler": "updateSkill",
+    "controller": "SkillController.java",
+    "arguments": "@PathVariable Integer id, @RequestBody @Valid Skill skill"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/skill/delete/{id}",
+    "handler": "deleteSkill",
+    "controller": "SkillController.java",
+    "arguments": "@PathVariable Integer id"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/skill-offer/get",
+    "handler": "getSkillOffer",
+    "controller": "SkillOfferController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/skill-offer/create/{skillId}",
+    "handler": "addOffer",
+    "controller": "SkillOfferController.java",
+    "arguments": "HttpSession session, @PathVariable Integer skillId,\n                                      @RequestBody @Valid SkillOffer skillOffer"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/skill-offer/update/{id}",
+    "handler": "updateSkillOffer",
+    "controller": "SkillOfferController.java",
+    "arguments": "@PathVariable Integer id, @RequestBody @Valid SkillOffer skillOffer"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/skill-offer/delete/{id}",
+    "handler": "deleteSkillOffer",
+    "controller": "SkillOfferController.java",
+    "arguments": "@PathVariable Integer id"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/skill-offer/skill/{skillId}",
+    "handler": "getOffersBySkill",
+    "controller": "SkillOfferController.java",
+    "arguments": "@PathVariable Integer skillId"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/skill-offer/provider/{providerId}",
+    "handler": "getOffersCreatedByProvider",
+    "controller": "SkillOfferController.java",
+    "arguments": "@PathVariable Integer providerId"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/skill-offer/available",
+    "handler": "getActiveOffers",
+    "controller": "SkillOfferController.java",
+    "arguments": ""
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/token-transaction/get",
+    "handler": "get",
+    "controller": "TokenTransactionController.java",
+    "arguments": ""
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/token-transaction/get/account/{accountId}",
+    "handler": "getByAccountId",
+    "controller": "TokenTransactionController.java",
+    "arguments": "@PathVariable Integer accountId"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/token-transaction/get/exchange/{exchangeId}",
+    "handler": "getByExchangeId",
+    "controller": "TokenTransactionController.java",
+    "arguments": "@PathVariable Integer exchangeId"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/token-transaction/add",
+    "handler": "add",
+    "controller": "TokenTransactionController.java",
+    "arguments": "@RequestBody @Valid TokenTransactionDtoIn dto"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/token-transaction/update/{id}",
+    "handler": "update",
+    "controller": "TokenTransactionController.java",
+    "arguments": "@PathVariable Integer id, @RequestBody @Valid TokenTransactionDtoIn dto"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/token-transaction/delete/{id}",
+    "handler": "delete",
+    "controller": "TokenTransactionController.java",
+    "arguments": "@PathVariable Integer id"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/token-transaction/account/balance",
+    "handler": "getBalance",
+    "controller": "TokenTransactionController.java",
+    "arguments": "HttpSession session"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/token-transaction/account/history",
+    "handler": "getHistory",
+    "controller": "TokenTransactionController.java",
+    "arguments": "HttpSession session"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/token-transaction/bonus",
+    "handler": "giveBonus",
+    "controller": "TokenTransactionController.java",
+    "arguments": "HttpSession session"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/token-transaction/refund/{exchangeId}",
+    "handler": "refundExchange",
+    "controller": "TokenTransactionController.java",
+    "arguments": "@PathVariable Integer exchangeId, HttpSession session"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/token-transaction/purchase/{amount}",
+    "handler": "purchaseTokens",
+    "controller": "TokenTransactionController.java",
+    "arguments": "@PathVariable Integer amount, HttpSession session"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/token-transaction/redeem/{amount}",
+    "handler": "redeemTokens",
+    "controller": "TokenTransactionController.java",
+    "arguments": "@PathVariable Integer amount, HttpSession session"
+  }
+]

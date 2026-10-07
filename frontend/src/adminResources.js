@@ -1,0 +1,21 @@
+import {f,profileFields,offerFields,sessionFields,modes} from './ui';
+import {sessionDate,negotiationDate} from './rules';
+const id = name=>f(name,{type:'number',required:true,min:1});
+const negotiationFields=[f('message',{required:true,type:'textarea',maxLength:500,wide:true}),f('proposedDate',{type:'datetime-local'})];
+export const adminResources = {
+ 'account': {label:'Accounts',create:true,remove:true,fields:[f('email',{required:true,type:'email',maxLength:150}),f('password',{required:true,type:'password',minLength:8,maxLength:255,hint:'Enter a new password; existing passwords are never returned.'}),f('accountType',{required:true,options:['INDIVIDUAL','COMPANY','ADMIN']})]},
+ 'individual-profile': {label:'Individual profiles',create:true,remove:true,fields:[...profileFields(false),id('accountId')],initial:r=>({accountId:r.id})},
+ 'company-profile': {label:'Company profiles',create:true,remove:true,fields:[...profileFields(true),id('accountId')],initial:r=>({accountId:r.id})},
+ 'skill': {label:'Skills',create:true,remove:true,fields:[f('name',{required:true,maxLength:100}),f('category',{required:true,maxLength:100}),f('description',{type:'textarea',maxLength:500,wide:true})]},
+ 'account-skill': {label:'Account skills',remove:true,fields:[f('level',{required:true,options:['BEGINNER','INTERMEDIATE','ADVANCED','EXPERT']}),f('verified',{type:'checkbox'})]},
+ 'skill-offer': {label:'Skill offers',remove:true,fields:offerFields,note:'Create teaching offers from My offers after verifying the skill.'},
+ 'learning-request': {label:'Learning requests',remove:true,fields:[f('description',{type:'textarea',maxLength:500,wide:true}),f('mode',{required:true,options:modes}),f('baseTokens',{type:'number',required:true,min:1}),f('weekend',{type:'checkbox'}),f('neededBy',{type:'datetime-local'})],initial:r=>({neededBy:r.neededBy?.replace(' ','T') || ''}),prepare:r=>({...r,neededBy:negotiationDate(r.neededBy)}),note:'Only OPEN requests can be edited or deleted. New requests originate from an offer.'},
+ 'request-negotiation': {label:'Negotiations',remove:true,fields:negotiationFields,initial:r=>({proposedDate:r.proposedDate?.replace(' ','T') || ''}),prepare:r=>({...r,proposedDate:negotiationDate(r.proposedDate)})},
+ 'exchange': {label:'Exchanges',remove:true,fields:[f('tokenAmount',{required:true,type:'number',min:1})],note:'Create exchanges through an accepted proposal. The legacy add endpoint lacks required associations and is not exposed.'},
+ 'agreement': {label:'Agreements',create:true,remove:true,fields:[id('exchangeId'),f('content',{required:true,type:'textarea',wide:true})],initial:r=>({exchangeId:r.id})},
+ 'session': {label:'Sessions',create:true,remove:true,fields:[...sessionFields,id('skillOfferId'),f('status',{options:['SCHEDULED','COMPLETED','CANCELLED'],required:true})],initial:r=>({scheduledAt:sessionDate(r.scheduledAt)?.slice(0,16)}),prepare:r=>({...r,scheduledAt:sessionDate(r.scheduledAt)}),defaults:{status:'SCHEDULED',mode:'ONLINE',durationMinutes:60},note:'Zoom-linked sessions cannot be edited or deleted through the uploaded backend.'},
+ 'session-participant': {label:'Session participants',create:true,remove:true,fields:[id('sessionId'),id('exchangeId'),f('status',{required:true,options:['JOINED','ATTENDED','ABSENT','CANCELLED']})]},
+ 'skill-assessment': {label:'Assessments',remove:false,fields:[],note:'Assessment results are permanent records. Use the AI assessment flow to generate and evaluate questions.'},
+ 'review': {label:'Reviews',remove:true,fields:[f('rating',{required:true,type:'number',min:1,max:5}),f('comment',{type:'textarea',wide:true}),id('exchangeId'),id('reviewerAccountId'),id('reviewedAccountId')]},
+ 'token-transaction': {label:'Token transactions',create:true,remove:true,fields:[f('amount',{required:true,type:'number',min:1}),f('type',{required:true,options:['STARTING','TEACHING','LEARNING','BONUS','REFUND','PURCHASE','REDEMPTION']}),f('description',{type:'textarea',wide:true}),id('accountId'),f('exchangeId',{type:'number',min:1})],prepare:r=>({...r,exchangeId:r.exchangeId==='' || r.exchangeId===undefined?null:r.exchangeId}),note:'Maintenance changes transaction records only; use wallet workflows for balance changes.'},
+};
