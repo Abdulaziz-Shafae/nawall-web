@@ -16,6 +16,8 @@ services:
   backend:
     build: ./backend
     env_file: ./backend/.env
+    volumes:
+      - nawall-uploads:/app/uploads
     environment:
       DB_URL: jdbc:mysql://db:3306/nawall
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:8088}
@@ -31,3 +33,4 @@ services:
       - backend
 volumes:
   nawall-db:
+  nawall-uploads:

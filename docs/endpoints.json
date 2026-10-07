@@ -358,6 +358,27 @@
   },
   {
     "method": "GET",
+    "path": "/api/v1/health",
+    "handler": "health",
+    "controller": "HealthController.java",
+    "arguments": ""
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/media/images",
+    "handler": "upload",
+    "controller": "ImageUploadController.java",
+    "arguments": "@RequestParam(\"file\") MultipartFile file"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/media/images/{name}",
+    "handler": "read",
+    "controller": "ImageUploadController.java",
+    "arguments": "@PathVariable String name"
+  },
+  {
+    "method": "GET",
     "path": "/api/v1/individual-profile/get",
     "handler": "get",
     "controller": "IndividualProfileController.java",

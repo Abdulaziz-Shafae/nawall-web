@@ -15,3 +15,5 @@ export const can = {
 export const negotiationDate = value => value ? value.replace('T',' ').slice(0,16) : null;
 export const sessionDate = value => value ? value.replace(' ','T').slice(0,19) : null;
 export const safeUrl = value => { try { const url = new URL(value); return ['http:','https:'].includes(url.protocol) ? url.href : null; } catch { return null; } };
+
+export const safeImageUrl = value => typeof value==='string' && /^\/api\/v1\/media\/images\/[a-f0-9-]+\.(png|jpg)$/.test(value) ? value : safeUrl(value);

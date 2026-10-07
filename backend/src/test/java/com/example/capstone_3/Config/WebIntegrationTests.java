@@ -62,4 +62,11 @@ class WebIntegrationTests {
         assertFalse(interceptor.preHandle(req("PUT","/api/v1/individual-profile/update/2","INDIVIDUAL"),new MockHttpServletResponse(),null));
         assertFalse(interceptor.preHandle(req("DELETE","/api/v1/individual-profile/delete/1","INDIVIDUAL"),new MockHttpServletResponse(),null));
     }
+    @Test void healthAndRegistrationImagesArePublicButUploadsRequireTrustedOrigins() throws Exception {
+        assertTrue(interceptor.preHandle(req("GET","/api/v1/health",null),new MockHttpServletResponse(),null));
+        assertTrue(interceptor.preHandle(req("GET","/api/v1/media/images/01234567-1234-1234-1234-012345678901.png",null),new MockHttpServletResponse(),null));
+        assertTrue(interceptor.preHandle(req("POST","/api/v1/media/images",null),new MockHttpServletResponse(),null));
+        var untrusted=req("POST","/api/v1/media/images",null);untrusted.addHeader("Origin","https://untrusted.example");
+        assertFalse(interceptor.preHandle(untrusted,new MockHttpServletResponse(),null));
+    }
 }

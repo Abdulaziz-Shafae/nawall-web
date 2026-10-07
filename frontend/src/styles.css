@@ -12,3 +12,5 @@
 @media(max-width:650px){.auth-art{display:none}.hero-art>img{object-position:right}}
 .hero h1,.auth-story h1,.landing-cta h2{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:-.02em;font-weight:600}[dir=rtl] .hero h1,[dir=rtl] .auth-story h1,[dir=rtl] .landing-cta h2{font-family:'Noto Sans Arabic',sans-serif;text-transform:none;letter-spacing:0}
 @media(max-width:650px){.tabs{overflow-x:auto}.tabs button{flex-shrink:0;padding:12px 14px}}
+
+.image-field label{display:grid;gap:8px}.image-field input[type=file]{width:100%;max-width:100%;padding:12px;border:1px solid var(--line)}.image-preview{display:flex;align-items:center;gap:12px;margin-top:8px}.image-preview img{width:84px;height:84px;object-fit:cover;border-radius:12px}.image-field small{display:block;margin-top:6px}

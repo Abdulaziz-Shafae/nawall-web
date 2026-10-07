@@ -6,8 +6,8 @@ java = root / 'backend/src/main/java/com/example/capstone_3'
 routes = []
 for file in sorted((java / 'Controller').glob('*.java')):
     text = file.read_text(encoding='utf-8-sig')
-    base = re.search(r'@RequestMapping\("([^"]+)"\)', text).group(1)
-    for m in re.finditer(r'@(Get|Post|Put|Delete)Mapping\((?:value\s*=\s*)?"([^"]+)"[^\n]*\)\s*public\s+ResponseEntity<[^>]+>\s+(\w+)\((.*?)\)\s*(?:throws[\w\s,]+)?\{', text, re.S):
+    base = re.search(r'@RequestMapping\("([^"]*)"\)', text).group(1)
+    for m in re.finditer(r'@(Get|Post|Put|Delete)Mapping\((?:value\s*=\s*)?"([^"]*)"[^\n]*\)\s*public\s+ResponseEntity<[^>]+>\s+(\w+)\((.*?)\)\s*(?:throws[\w\s,]+)?\{', text, re.S):
         verb, suffix, method, args = m.groups()
         routes.append(dict(method=verb.upper(), path=base+suffix, handler=method, controller=file.name, arguments=args.strip()))
 (root / 'docs/endpoints.json').write_text(json.dumps(routes, indent=2), encoding='utf-8')

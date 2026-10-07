@@ -55,6 +55,9 @@ Generated from controller source before frontend implementation. See Java DTOs a
 | PUT | `/api/v1/exchange/{exchangeId}/cancel` | ExchangeController.java · cancelExchange |
 | GET | `/api/v1/exchange/account` | ExchangeController.java · getAccountExchanges |
 | PUT | `/api/v1/exchange/{exchangeId}/complete` | ExchangeController.java · completeExchange |
+| GET | `/api/v1/health` | HealthController.java · health |
+| POST | `/api/v1/media/images` | ImageUploadController.java · upload |
+| GET | `/api/v1/media/images/{name}` | ImageUploadController.java · read |
 | GET | `/api/v1/individual-profile/get` | IndividualProfileController.java · get |
 | POST | `/api/v1/individual-profile/add` | IndividualProfileController.java · add |
 | PUT | `/api/v1/individual-profile/update/{id}` | IndividualProfileController.java · update |

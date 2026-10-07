@@ -110,11 +110,11 @@ npm audit
 
 ```powershell
 cd backend
-.\mvnw.cmd "-Dtest=OfferEvaluationTests,ExchangeCompletionTests,WebIntegrationTests" test
+.\mvnw.cmd "-Dtest=ImageUploadTests,OfferEvaluationTests,ExchangeCompletionTests,WebIntegrationTests" test
 .\mvnw.cmd -DskipTests package
 ```
 
-Recorded results: production frontend build passed; 14 frontend tests passed; 133 method/path checks matched all 124 source endpoints; 14 targeted backend tests passed; dependency audit reported zero vulnerabilities after a compatible source-map-js patch. The normal uploaded `contextLoads` test requires a configured database and OpenAI environment and was not included in the isolated test run. Desktop/mobile English and Arabic rendering and unavailable-server feedback were inspected in the real browser.
+Recorded results: production frontend build passed; 15 frontend tests passed; 135 method/path checks matched all 127 source endpoints; 19 targeted backend tests passed; dependency audit reported zero vulnerabilities after a compatible source-map-js patch. The normal uploaded `contextLoads` test requires a configured database and OpenAI environment and was not included in the isolated test run. Desktop/mobile English and Arabic rendering and unavailable-server feedback were inspected in the real browser.
 
 **Live database/external-provider end-to-end verification remains pending.** No MySQL service was reachable in the authoring environment and no new external credentials were supplied. The frontend is wired to the original services; successful email/WhatsApp/Zoom/AI delivery has not been claimed without those services running. No mock data is substituted for this limitation.
 
@@ -125,3 +125,13 @@ Framework setup follows the [Vite guide](https://vite.dev/guide/) and [React Rou
 Before creating an offer, providers can select **Evaluate price**. It sends the entered description, mode, tokenCost, and capacity to `POST /api/v1/skill-offer/create/{skillId}/evaluate`. Include duration and topics in the description. The server requires an active account and a verified owned skill, and compares up to 20 active mode-compatible offers. It returns FAIR, OVERPRICED, UNDERPRICED, or INSUFFICIENT_INFORMATION with a nullable suggested price, explanation and suggestions. This does not save or modify the offer. The separate **Create offer** action saves the provider’s entered price. Editing any field clears the previous evaluation.
 
 The DTOs and service/controller addition follow the supplied update. Four isolated tests cover no-save behavior, insufficient evidence, inconsistent prices, and verification requirements. Actual provider output still requires configured MySQL and OpenAI credentials.
+
+## Profile image and company logo uploads
+
+Registration, profile editing and administrator profile forms use a file selector with an image preview and removal. Choose JPG or PNG up to 2 MB; the server also checks the decoded format and limits images to 10 million pixels. On form submission, `POST /api/v1/media/images` receives multipart `file`, then the existing registration/profile endpoint receives the saved image URL. Existing DTO fields and database relationships remain unchanged. Images are re-encoded with generated filenames, and served through `GET /api/v1/media/images/{name}`. Uploads are available before login for registration and follow the same trusted-origin/custom-header checks as other mutations.
+
+**Railway:** attach a persistent volume to the backend at `/app/uploads` and set `UPLOAD_DIR=/app/uploads` before uploading. Without persistent storage, images will disappear after redeploys. Keep one backend replica with this filesystem storage. Compose includes an image volume; local storage defaults to `uploads` and is ignored by Git. Uploaded images are public profile media; abandoned registration uploads currently remain in storage.
+
+## Railway deployment
+
+Follow [docs/RAILWAY.md](docs/RAILWAY.md) for the prepared three-service deployment. Paste [backend variables](deploy/railway/backend.env.example) and [frontend variables](deploy/railway/frontend.env.example) into Railway’s Raw Editor. MySQL and domain values use Railway references; replace provider placeholders only in backend Variables. Runtime nginx settings preserve Docker Compose defaults and support Railway private networking. The deployment guide supplies each service’s root directory, health checks and single-replica settings. Attach the upload volume before using images.

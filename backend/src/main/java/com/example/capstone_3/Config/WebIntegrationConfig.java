@@ -37,8 +37,10 @@ public class WebIntegrationConfig implements WebMvcConfigurer {
                 String origin = req.getHeader("Origin");
                 if (!read && origin != null && Arrays.stream(origins.split(",")).noneMatch(origin::equals))
                     return deny(res, 403, "Request origin is not allowed");
+                if ((!read && "POST".equals(req.getMethod()) && path.equals("/api/v1/media/images"))
+                        || (read && path.matches("/api/v1/media/images/[a-f0-9-]+\\.(png|jpg)"))) return true;
                 if (path.matches("/api/v1/account/(login|register/(individual|company)|verify-email)")) return true;
-                if (read && (path.equals("/api/v1/skill/get") || path.matches("/api/v1/skill-offer/(available|skill/\\d+|provider/\\d+)")
+                if (read && (path.equals("/api/v1/health") || path.equals("/api/v1/skill/get") || path.matches("/api/v1/skill-offer/(available|skill/\\d+|provider/\\d+)")
                         || path.startsWith("/api/v1/search/") || path.matches("/api/v1/review/account/\\d+(/average)?"))) return true;
                 Integer id = req.getSession(false) == null ? null : (Integer) req.getSession(false).getAttribute("accountId");
                 Account account = id == null ? null : accounts.findAccountById(id);

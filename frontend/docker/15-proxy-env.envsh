@@ -1,0 +1,21 @@
+#!/bin/sh
+# Sourced by the official nginx entrypoint before template substitution.
+set -eu
+for proxy_port in "$PORT" "$BACKEND_PORT"; do
+    case "$proxy_port" in
+        ""|*[!0-9]*) echo "PORT and BACKEND_PORT must be numbers" >&2; exit 1 ;;
+    esac
+    if [ "$proxy_port" -lt 1 ] || [ "$proxy_port" -gt 65535 ]; then
+        echo "Ports must be between 1 and 65535" >&2; exit 1
+    fi
+done
+case "$BACKEND_HOST" in
+    ""|*[!a-zA-Z0-9.-]*) echo "BACKEND_HOST must be a hostname" >&2; exit 1 ;;
+esac
+if [ -z "${DNS_RESOLVER:-}" ]; then
+    DNS_RESOLVER=$(awk '/^nameserver[[:space:]]/ { if (index($2, ":")) print "[" $2 "]"; else print $2; exit }' /etc/resolv.conf)
+fi
+if [ -z "$DNS_RESOLVER" ]; then
+    echo "No DNS resolver is configured" >&2; exit 1
+fi
+export DNS_RESOLVER

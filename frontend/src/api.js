@@ -2,6 +2,7 @@ export class ApiError extends Error {
  constructor(message, status, payload) { super(message); this.status = status; this.payload = payload; }
 }
 export const routes = {
+ uploadImage: ['POST','/api/v1/media/images'], image: ['GET','/api/v1/media/images/{name}'],
  profile: ['GET','/api/v1/account/profile'], dashboard: ['GET','/api/v1/account/dashboard'], login: ['POST','/api/v1/account/login'], logout: ['POST','/api/v1/account/logout'], registerIndividual: ['POST','/api/v1/account/register/individual'], registerCompany: ['POST','/api/v1/account/register/company'], sendVerification: ['POST','/api/v1/account/send-verification-email'], verifyEmail: ['GET','/api/v1/account/verify-email'],
  skills: ['GET','/api/v1/skill/get'], mySkills: ['GET','/api/v1/account-skill/account/{accountId}'], verifiedSkills: ['GET','/api/v1/account-skill/verified/{accountId}'], addSkill: ['POST','/api/v1/account-skill/add/{skillId}'], removeSkill: ['DELETE','/api/v1/account-skill/delete/{id}'],
  offers: ['GET','/api/v1/skill-offer/available'], skillOffers: ['GET','/api/v1/skill-offer/skill/{skillId}'], providerOffers: ['GET','/api/v1/skill-offer/provider/{providerId}'], createOffer: ['POST','/api/v1/skill-offer/create/{skillId}'], evaluateOffer: ['POST','/api/v1/skill-offer/create/{skillId}/evaluate'], updateOffer: ['PUT','/api/v1/skill-offer/update/{id}'], deleteOffer: ['DELETE','/api/v1/skill-offer/delete/{id}'],
@@ -39,3 +40,16 @@ export async function request(method, path, { body, query, signal } = {}) {
  return data;
 }
 export function api(key, params, options) { const route = routes[key]; if (!route) throw new Error(`Unknown action ${key}`); return request(route[0], routePath(route[1], params), options); }
+
+export async function uploadFormImages(body) {
+ const prepared={...body};
+ for(const name of ['profileImage','logo']) {
+  if(typeof File!=='undefined' && prepared[name] instanceof File) {
+   const form=new FormData();form.append('file',prepared[name]);
+   const result=await api('uploadImage',{}, {body:form});
+   if(!result?.url)throw new ApiError('The image upload did not return a saved image URL',502,result);
+   prepared[name]=result.url;
+  }
+ }
+ return prepared;
+}
