@@ -19,3 +19,4 @@
 @media(max-width:650px){.field input,.field select,.field textarea{font-size:16px}.btn,.icon-btn,.menu-toggle,.language{min-height:44px}.modal{max-height:90dvh;width:calc(100% - 24px)}.form-footer{flex-wrap:wrap}.profile-card p,.offer-card p,.result-text{overflow-wrap:anywhere}}
 @media(max-width:900px){.app-shell{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:650px){.wallet-hero>div{min-width:0}.wallet-hero .actions{flex-wrap:wrap}.verification-banner>span{min-width:0;overflow-wrap:anywhere}}
+@media(max-width:360px){.topbar{padding-inline:10px}.brand{font-size:19px;gap:5px}.brand span{font-size:16px}.brand>span,[dir=rtl] .brand>span{padding-left:5px;padding-right:0}.top-actions{gap:5px}.top-actions .wallet-pill{padding:6px}.language{padding-inline:2px}}
